@@ -28,13 +28,11 @@
     
     NSMutableArray *cities = [[NSMutableArray alloc] init];
     for (NSDictionary *place in placesArray) {
-        
+        NSLog(@"Cityes model: %@", place);
         
         Cityes *citi = [[Cityes alloc] initWithName:[place objectForKey:@"name"]
                                               woeid:[NSString stringWithFormat:@"%@", [place objectForKey:@"woeid"]]];
         [cities addObject:citi];
-        //        [place objectForKey:@"name"];
-        //        [place objectForKey:@"woeid"];
     }
     
     return cities;

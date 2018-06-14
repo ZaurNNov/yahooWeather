@@ -58,15 +58,14 @@
 
 - (void)refresh {
     
-//NSString *quer1 = [NSString stringWithFormat:@"select woeid,name from geo.places(2) where text=\"%@\"", @"Moscow"];
-    //NSDictionary *results = [self.yql requestToYahooWithQuery:quer1];
-    //NSLog(@"%@", results);
-    //self.cities = [YQL requestCity:quer1];
+    NSString *quer1 = [NSString stringWithFormat:@"select woeid,name from geo.places(2) where text=\"%@\"", @"Moscow"];
+    NSArray *array = [[NSArray alloc] initWithArray:[YQL requestCity:quer1]];
     
+    //self.city = array[0];
     self.city = [[Cityes alloc] initWithName:@"Moscow"
                                        woeid:[NSString stringWithFormat:@"%d", 2122265]];
     
-    NSDictionary *detail = [YQL loadCityDetails:self.city];
+    NSArray *detail = [YQL loadCityDetails:self.city];
     
     NSLog(@"%@", detail);
 }
