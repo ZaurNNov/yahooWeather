@@ -10,6 +10,11 @@
 		CE03790F20D2394700859237 /* YQL.m in Sources */ = {isa = PBXBuildFile; fileRef = CE03790E20D2394600859237 /* YQL.m */; };
 		CE03791320D23F6800859237 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE03791220D23F6800859237 /* DetailViewController.m */; };
 		CE03791520D245F600859237 /* WeatherDetailsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE03791420D245F600859237 /* WeatherDetailsViewController.storyboard */; };
+		CE03791820D25BEB00859237 /* Cityes.m in Sources */ = {isa = PBXBuildFile; fileRef = CE03791720D25BEB00859237 /* Cityes.m */; };
+		CE03791B20D2621C00859237 /* DataParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE03791A20D2621C00859237 /* DataParser.m */; };
+		CE03791E20D2657400859237 /* CitiPlaces.m in Sources */ = {isa = PBXBuildFile; fileRef = CE03791D20D2657400859237 /* CitiPlaces.m */; };
+		CE03792120D2A2BD00859237 /* WindResult.m in Sources */ = {isa = PBXBuildFile; fileRef = CE03792020D2A2BD00859237 /* WindResult.m */; };
+		CE03792420D2A2E800859237 /* ConditionResult.m in Sources */ = {isa = PBXBuildFile; fileRef = CE03792320D2A2E800859237 /* ConditionResult.m */; };
 		CEBED5F120D16F0B0068C41C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBED5F020D16F0B0068C41C /* AppDelegate.m */; };
 		CEBED5F420D16F0B0068C41C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBED5F320D16F0B0068C41C /* MainViewController.m */; };
 		CEBED5F720D16F0B0068C41C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEBED5F520D16F0B0068C41C /* Main.storyboard */; };
@@ -25,6 +30,16 @@
 		CE03791120D23F6800859237 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		CE03791220D23F6800859237 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		CE03791420D245F600859237 /* WeatherDetailsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WeatherDetailsViewController.storyboard; sourceTree = "<group>"; };
+		CE03791620D25BEB00859237 /* Cityes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cityes.h; sourceTree = "<group>"; };
+		CE03791720D25BEB00859237 /* Cityes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Cityes.m; sourceTree = "<group>"; };
+		CE03791920D2621C00859237 /* DataParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataParser.h; sourceTree = "<group>"; };
+		CE03791A20D2621C00859237 /* DataParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataParser.m; sourceTree = "<group>"; };
+		CE03791C20D2657400859237 /* CitiPlaces.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CitiPlaces.h; sourceTree = "<group>"; };
+		CE03791D20D2657400859237 /* CitiPlaces.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CitiPlaces.m; sourceTree = "<group>"; };
+		CE03791F20D2A2BD00859237 /* WindResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WindResult.h; sourceTree = "<group>"; };
+		CE03792020D2A2BD00859237 /* WindResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WindResult.m; sourceTree = "<group>"; };
+		CE03792220D2A2E800859237 /* ConditionResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConditionResult.h; sourceTree = "<group>"; };
+		CE03792320D2A2E800859237 /* ConditionResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConditionResult.m; sourceTree = "<group>"; };
 		CEBED5EC20D16F0B0068C41C /* yahooWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yahooWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEBED5EF20D16F0B0068C41C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CEBED5F020D16F0B0068C41C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -85,6 +100,16 @@
 				CEBED5F520D16F0B0068C41C /* Main.storyboard */,
 				CE03791420D245F600859237 /* WeatherDetailsViewController.storyboard */,
 				CEBED5FA20D16F0C0068C41C /* LaunchScreen.storyboard */,
+				CE03791920D2621C00859237 /* DataParser.h */,
+				CE03791A20D2621C00859237 /* DataParser.m */,
+				CE03791620D25BEB00859237 /* Cityes.h */,
+				CE03791720D25BEB00859237 /* Cityes.m */,
+				CE03791C20D2657400859237 /* CitiPlaces.h */,
+				CE03791D20D2657400859237 /* CitiPlaces.m */,
+				CE03791F20D2A2BD00859237 /* WindResult.h */,
+				CE03792020D2A2BD00859237 /* WindResult.m */,
+				CE03792220D2A2E800859237 /* ConditionResult.h */,
+				CE03792320D2A2E800859237 /* ConditionResult.m */,
 			);
 			path = yahooWeather;
 			sourceTree = "<group>";
@@ -163,9 +188,14 @@
 				CEBED5F420D16F0B0068C41C /* MainViewController.m in Sources */,
 				CE03790F20D2394700859237 /* YQL.m in Sources */,
 				CEBED5FF20D16F0C0068C41C /* main.m in Sources */,
+				CE03791E20D2657400859237 /* CitiPlaces.m in Sources */,
 				CEBED5F120D16F0B0068C41C /* AppDelegate.m in Sources */,
+				CE03791820D25BEB00859237 /* Cityes.m in Sources */,
+				CE03791B20D2621C00859237 /* DataParser.m in Sources */,
 				CEBED60720D16F620068C41C /* examole.m in Sources */,
+				CE03792120D2A2BD00859237 /* WindResult.m in Sources */,
 				CE03791320D23F6800859237 /* DetailViewController.m in Sources */,
+				CE03792420D2A2E800859237 /* ConditionResult.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

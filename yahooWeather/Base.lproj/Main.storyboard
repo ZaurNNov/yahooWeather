@@ -30,7 +30,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wC8-Vz-adt">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="wC8-Vz-adt">
                                                     <rect key="frame" x="15" y="0.0" width="345" height="69.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="20"/>
@@ -48,10 +48,23 @@
                     </view>
                     <navigationItem key="navigationItem" id="OzA-5h-Wsh">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="uCr-hj-mnG"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="flz-xs-yUR"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="uCr-hj-mnG">
+                            <connections>
+                                <action selector="searchUIAction:" destination="BYZ-38-t0r" id="MLZ-2z-yLB"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="flz-xs-yUR">
+                            <connections>
+                                <action selector="plusUIAction:" destination="BYZ-38-t0r" id="124-xE-TAI"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="plusUIBarButtom" destination="flz-xs-yUR" id="2JJ-AP-VM2"/>
+                        <outlet property="searchUIBarButtom" destination="uCr-hj-mnG" id="sVA-eX-4QS"/>
+                        <outlet property="tableView" destination="Ih1-mc-GlO" id="XJG-l1-RBc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

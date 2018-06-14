@@ -6,11 +6,12 @@
 //  Copyright (c) 2012 Guilherme Chapiewski. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "Cityes.h"
 
 @interface YQL : NSObject
 
-- (NSDictionary *)query:(NSString *)statement;
-- (NSDictionary *)requestToYahooWithQuery:(NSString *)query;
++ (NSArray *)requestCity:(NSString *)query;
++ (NSArray *)loadCityDetails: (Cityes *)city;
 
 @end
