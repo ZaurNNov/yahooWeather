@@ -20,18 +20,31 @@
                                                       error:nil];
     //NSLog(@"%@", jsonResult);
     
+    NSMutableArray *cities = [[NSMutableArray alloc] init];
+    
     NSDictionary *queryDict = jsonResult[@"query"]; // All data
     
     NSDictionary *resultsDict = queryDict[@"results"]; // All results
+    // NSLog(@"Cityes model: %@", resultsDict);
     
-    NSArray *placesArray = resultsDict[@"place"]; // All plases
+    NSInteger fetchCount = [queryDict[@"count"] integerValue];
     
-    NSMutableArray *cities = [[NSMutableArray alloc] init];
-    for (NSDictionary *place in placesArray) {
-        NSLog(@"Cityes model: %@", place);
+    if (fetchCount > 1) {
+        NSDictionary *placesDict = resultsDict[@"place"]; // All plases
         
-        Cityes *citi = [[Cityes alloc] initWithName:[place objectForKey:@"name"]
-                                              woeid:[NSString stringWithFormat:@"%@", [place objectForKey:@"woeid"]]];
+           for (NSDictionary *dict in placesDict) {
+               Cityes *citi = [[Cityes alloc] initWithName:[dict objectForKey:@"name"]
+                                                     woeid:[NSString stringWithFormat:@"%@", [dict objectForKey:@"woeid"]]];
+               [cities addObject:citi];
+           }
+    } else if (fetchCount == 1) {
+        NSDictionary *placesDict = resultsDict[@"place"]; // Only 1 Citi
+        
+        NSString *townName = [placesDict objectForKey:@"name"];
+        NSString *townWoeid = [placesDict objectForKey:@"woeid"];
+        
+        Cityes *citi = [[Cityes alloc] initWithName:townName
+                                               woeid:[NSString stringWithFormat:@"%@", townWoeid]];
         [cities addObject:citi];
     }
     
@@ -73,7 +86,7 @@
     [detailsResult addObject:cond];
     
     
-    NSLog(@"%@", detailsResult); // pause
+    //NSLog(@"%@", detailsResult); // pause
     return detailsResult;
 }
 

@@ -11,7 +11,10 @@
 
 @interface YQL : NSObject
 
-+ (NSArray *)requestCity:(NSString *)query;
-+ (NSArray *)loadCityDetails: (Cityes *)city;
+//+ (NSArray *)requestCity:(NSString *)query;
+//+ (NSArray *)loadCityDetails: (Cityes *)city;
+
++ (void)fetchCitiesWithSearchText:(NSString *)searchText completionBlock:(void (^)(NSArray *cities))completionBlock;
++ (void)fetchCityDetails:(Cityes *)city completionBlock:(void (^)(NSArray *citiDetails))completionBlock;
 
 @end

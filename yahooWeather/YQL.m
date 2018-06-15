@@ -21,6 +21,75 @@
 
 @implementation YQL
 
+// Return Cities Array in complition block
++ (void)fetchCitiesWithSearchText:(NSString *)searchText completionBlock:(void (^)(NSArray *cities))completionBlock {
+    
+    NSString *query = [NSString stringWithFormat:@"select woeid,name from geo.places(2) where text=\"%@\"", searchText];
+    
+    NSMutableArray *arr = [NSMutableArray array]; // Return Cities array
+    
+    NSCharacterSet *set = [NSCharacterSet URLFragmentAllowedCharacterSet];
+    NSString *encodedString = [query stringByAddingPercentEncodingWithAllowedCharacters:set];
+    NSString *strRequest = [NSString stringWithFormat:@"%@%@%@", QUERY_PREFIX, encodedString, QUERY_SUFFIX];
+    
+    //NSLog(@"%@", strRequest);
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:
+                                    [NSURL URLWithString:[NSString stringWithFormat:@"%@", strRequest]]
+                                             cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:24 *60];
+    
+    
+    [[session dataTaskWithRequest:request
+                completionHandler:^(NSData *data,
+                                    NSURLResponse *response,
+                                    NSError *error) {
+                    
+                    [arr addObjectsFromArray:[DataParser parseCitiFromData:data]];
+                    if (completionBlock !=nil) {
+                        completionBlock(arr.copy);
+                    }
+                    //NSLog(@"%@", arr);
+                    
+                }] resume];
+}
+
+// Return City Detail in complition block
++ (void)fetchCityDetails:(Cityes *)city completionBlock:(void (^)(NSArray *citiDetails))completionBlock {
+    
+    NSString *woeid = [NSString stringWithFormat:@"%@", [city woeid]];
+    
+    NSMutableArray *details = [[NSMutableArray alloc] init]; // return
+    
+    NSCharacterSet *set = [NSCharacterSet URLFragmentAllowedCharacterSet];
+    NSString *encodedSELECT = [SELECT_SUFFIX stringByAddingPercentEncodingWithAllowedCharacters:set];
+    NSString *encodedString = [woeid stringByAddingPercentEncodingWithAllowedCharacters:set];
+    
+    NSString *strRequest = [NSString stringWithFormat:@"%@%@%@%@", QUERY_PREFIX, encodedSELECT, encodedString, QUERY_SUFFIX];
+    
+    NSLog(@"%@", strRequest);
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", strRequest]] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:24 *60];
+    
+    
+    [[session dataTaskWithRequest:request
+                completionHandler:^(NSData *data,
+                                    NSURLResponse *response,
+                                    NSError *error) {
+                    
+                    [details addObjectsFromArray:[DataParser resultsDictionaryFromData:data]];
+                    if (completionBlock !=nil) {
+                        completionBlock(details.copy);
+                    }
+                    //NSLog(@"%@", details);
+                    
+                }] resume];
+}
+
+//NSString *quer1 = [NSString stringWithFormat:@"select woeid,name from geo.places(2) where text=\"%@\"", @"Moscow"];
 // Return Cities Array
 + (NSArray *)requestCity:(NSString *)query {
     
@@ -34,8 +103,10 @@
     
     NSURLSession *session = [NSURLSession sharedSession];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", strRequest]] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:24 *60];
-
+    NSURLRequest *request = [NSURLRequest requestWithURL:
+                             [NSURL URLWithString:[NSString stringWithFormat:@"%@", strRequest]]
+                                             cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:24 *60];
+    
     
     [[session dataTaskWithRequest:request
                 completionHandler:^(NSData *data,
@@ -43,10 +114,10 @@
                                     NSError *error) {
                     
                     [arr addObjectsFromArray:[DataParser parseCitiFromData:data]];
-                    NSLog(@"%@", arr);
+                    //NSLog(@"%@", arr);
                     
                 }] resume];
-                           
+    
     return arr;
 }
 
