@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class Cityes;
+
 @interface DetailViewController : UIViewController
+
+@property (nonatomic) Cityes *city;
 
 @end

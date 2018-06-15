@@ -11,8 +11,8 @@
 
 @interface Cityes : NSObject
 
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *woeid;
+@property (nonatomic, copy, readonly) NSString *name;
+@property (nonatomic, copy, readonly) NSString *woeid;
 
 - (instancetype)initWithName:(NSString *)name
                        woeid:(NSString *)woeid;

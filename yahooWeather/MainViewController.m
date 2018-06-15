@@ -10,8 +10,9 @@
 #import "YQL.h"
 #import "Cityes.h"
 #import "SearchResultsController.h"
+#import "DetailViewController.h"
 
-@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate>
+@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate, SearchResultsControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UINavigationItem *NavigationBar;
@@ -45,6 +46,7 @@
     
     // Create a UITableViewController to present search results since the actual view controller is not a subclass of UITableViewController in this case
     self.searchResultController = [[SearchResultsController alloc] init];
+    self.searchResultController.delegate = self;
     
     // Init UISearchController with the search results controller
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultController];
@@ -212,5 +214,12 @@
     return self.resultForSavedCitiesTable.count;
 }
 
+-(void)searchResultControllerDidSelectCity:(Cityes *)city {
+    UIStoryboard *detailStoryboard = [UIStoryboard storyboardWithName:@"WeatherDetailsViewController" bundle:nil];
+    
+    DetailViewController *detailViewController = [detailStoryboard instantiateInitialViewController];
+    detailViewController.city = city;
+    [self.navigationController pushViewController:detailViewController animated:YES];
+}
 
 @end
