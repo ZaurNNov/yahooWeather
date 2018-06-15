@@ -44,6 +44,7 @@
     
     // Create a UITableViewController to present search results since the actual view controller is not a subclass of UITableViewController in this case
     UITableViewController *searchResultsController = [[UITableViewController alloc] init];
+    [searchResultsController.tableView registerClass:[UITableViewCell class]  forCellReuseIdentifier:@"Cell"];
     
     // Init UISearchController with the search results controller
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:searchResultsController];
@@ -68,7 +69,7 @@
     searchResultsController.tableView.dataSource = self;
     searchResultsController.tableView.delegate = self;
     self.searchController.delegate = self;
-    self.searchController.dimsBackgroundDuringPresentation = YES;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
     self.searchController.searchBar.delegate = self;
     
     /*
@@ -78,7 +79,6 @@
      [searchController.searchBar sizeToFit];
      */
 }
-
 
 #pragma mark - UISearchBarDelegate
 -(void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -97,6 +97,8 @@
 - (void)presentSearchController:(UISearchController *)searchController {
     
 }
+
+
 
 - (void)willPresentSearchController:(UISearchController *)searchController {
     // do something before the search controller is presented
@@ -170,8 +172,8 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"%@", self.searchResult);
-            
-            [self.tableView reloadData];
+            [[(UITableViewController *)self.searchController.searchResultsController tableView] reloadData];
+            //[self.tableView reloadData];
         });
     }];
 }
@@ -220,5 +222,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 70;
 }
+
+
 
 @end
