@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "YQL.h"
 #import "Cityes.h"
+#import "SearchResultsController.h"
 
 @interface MainViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate>
 
@@ -19,9 +20,9 @@
 @property (nonatomic) Cityes *city;
 @property (nonatomic) NSArray *resultForSavedCitiesTable; // saved citi - self tableview data
 @property (nonatomic, copy) NSArray *detailsForCiti; // data for seque
-@property (nonatomic, strong) NSArray *searchResult; // search result for search table
 
 @property (nonatomic) UISearchController *searchController;
+@property (nonatomic) SearchResultsController *searchResultController;
 
 @end
 
@@ -29,7 +30,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //[self.NavigationBar setHidesSearchBarWhenScrolling:true];
+    self.tableView.rowHeight = 70;
     
     // Init YQL
     self.yql = [[YQL alloc] init];
@@ -43,11 +44,10 @@
 -(void)createSerachControllerAndConfigureIt {
     
     // Create a UITableViewController to present search results since the actual view controller is not a subclass of UITableViewController in this case
-    UITableViewController *searchResultsController = [[UITableViewController alloc] init];
-    [searchResultsController.tableView registerClass:[UITableViewCell class]  forCellReuseIdentifier:@"Cell"];
+    self.searchResultController = [[SearchResultsController alloc] init];
     
     // Init UISearchController with the search results controller
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:searchResultsController];
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultController];
     
     // Link the search controller
     self.searchController.searchResultsUpdater = self;
@@ -66,8 +66,6 @@
     self.definesPresentationContext = YES;
     
     // Setting delegates and other stuff
-    searchResultsController.tableView.dataSource = self;
-    searchResultsController.tableView.delegate = self;
     self.searchController.delegate = self;
     self.searchController.dimsBackgroundDuringPresentation = NO;
     self.searchController.searchBar.delegate = self;
@@ -168,12 +166,10 @@
     //NSString *quer1 = [NSString stringWithFormat:@"select woeid,name from geo.places(2) where text=\"%@\"", @"Moscow"];
     
     [YQL fetchCitiesWithSearchText:searchText completionBlock:^(NSArray *cities) {
-        self.searchResult = cities;
+        self.searchResultController.cities = cities;
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"%@", self.searchResult);
-            [[(UITableViewController *)self.searchController.searchResultsController tableView] reloadData];
-            //[self.tableView reloadData];
+            [self.searchResultController.tableView reloadData];
         });
     }];
 }
@@ -197,15 +193,13 @@
 
 // TableView delegate
 
-- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
     // Create cell
     static NSString *CellId = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellId forIndexPath:indexPath];
     
-    // Configure cell
-//    Cityes *citi = self.resultForSavedCitiesTable[indexPath.row];
-    Cityes *citi = self.searchResult[indexPath.row];
+    Cityes *citi = self.resultForSavedCitiesTable[indexPath.row];
     
     cell.textLabel.text = citi.name;
     cell.detailTextLabel.text = citi.woeid;
@@ -215,14 +209,8 @@
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //return self.resultForSavedCitiesTable.count;
-    return self.searchResult.count;
+    return self.resultForSavedCitiesTable.count;
 }
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 70;
-}
-
 
 
 @end

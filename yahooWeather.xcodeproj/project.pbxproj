@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63269E1C20D44B5400CCE222 /* SearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63269E1B20D44B5400CCE222 /* SearchResultsController.m */; };
 		CE03790F20D2394700859237 /* YQL.m in Sources */ = {isa = PBXBuildFile; fileRef = CE03790E20D2394600859237 /* YQL.m */; };
 		CE03791320D23F6800859237 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE03791220D23F6800859237 /* DetailViewController.m */; };
 		CE03791520D245F600859237 /* WeatherDetailsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE03791420D245F600859237 /* WeatherDetailsViewController.storyboard */; };
@@ -24,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		63269E1A20D44B5400CCE222 /* SearchResultsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResultsController.h; sourceTree = "<group>"; };
+		63269E1B20D44B5400CCE222 /* SearchResultsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchResultsController.m; sourceTree = "<group>"; };
 		CE03790E20D2394600859237 /* YQL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YQL.m; sourceTree = "<group>"; };
 		CE03791020D2394F00859237 /* YQL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YQL.h; sourceTree = "<group>"; };
 		CE03791120D23F6800859237 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
@@ -86,6 +89,8 @@
 				CEBED5F520D16F0B0068C41C /* Main.storyboard */,
 				CE03791420D245F600859237 /* WeatherDetailsViewController.storyboard */,
 				CEBED5FA20D16F0C0068C41C /* LaunchScreen.storyboard */,
+				63269E1A20D44B5400CCE222 /* SearchResultsController.h */,
+				63269E1B20D44B5400CCE222 /* SearchResultsController.m */,
 				CEBED5F220D16F0B0068C41C /* MainViewController.h */,
 				CEBED5F320D16F0B0068C41C /* MainViewController.m */,
 				CE03791120D23F6800859237 /* DetailViewController.h */,
@@ -179,6 +184,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63269E1C20D44B5400CCE222 /* SearchResultsController.m in Sources */,
 				CEBED5F420D16F0B0068C41C /* MainViewController.m in Sources */,
 				CE03790F20D2394700859237 /* YQL.m in Sources */,
 				CEBED5FF20D16F0C0068C41C /* main.m in Sources */,
