@@ -23,7 +23,7 @@
     self.window = window;
     //window.frame = [UIScreen mainScreen].bounds;
     
-    UIStoryboard *mainStoriboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIStoryboard *mainStoriboard = [UIStoryboard storyboardWithName:@"MainViewController" bundle:nil];
     //[mainStoriboard instantiateInitialViewController];
     MainViewController *mvc = [mainStoriboard instantiateViewControllerWithIdentifier:@"mainVC"];
     
@@ -34,7 +34,5 @@
     
     return YES;
 }
-
-
 
 @end

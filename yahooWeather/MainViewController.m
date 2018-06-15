@@ -8,7 +8,7 @@
 
 #import "MainViewController.h"
 #import "YQL.h"
-#import "Cityes.h"
+#import "Cities.h"
 #import "SearchResultsController.h"
 #import "DetailViewController.h"
 
@@ -18,9 +18,9 @@
 @property (weak, nonatomic) IBOutlet UINavigationItem *NavigationBar;
 
 @property (strong, nonatomic) YQL *yql;
-@property (nonatomic) Cityes *city;
-@property (nonatomic) NSArray *resultForSavedCitiesTable; // saved citi - self tableview data
-@property (nonatomic, copy) NSArray *detailsForCiti; // data for seque
+@property (nonatomic) Cities *city;
+@property (nonatomic) NSArray *resultForSavedCitiesTable; // saved city - self tableview data
+@property (nonatomic, copy) NSArray *detailsForCity; // data for seque
 
 @property (nonatomic) UISearchController *searchController;
 @property (nonatomic) SearchResultsController *searchResultController;
@@ -31,15 +31,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.rowHeight = 70;
+    self.tableView.rowHeight = 70; // self savedCities
     
     // Init YQL
     self.yql = [[YQL alloc] init];
     
     // Create search
     [self createSerachControllerAndConfigureIt];
-    
-
 }
 
 -(void)createSerachControllerAndConfigureIt {
@@ -59,10 +57,11 @@
     
     // Required (?) to set place a search bar in a navigation bar
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleDefault;
+    [self.searchController.searchBar sizeToFit];
     
     // This is where you set the search bar in the navigation bar, instead of using table view's header ...
     self.navigationItem.titleView = self.searchController.searchBar;
-    self.searchController.searchBar.placeholder = @"Find citi here...";
+    self.searchController.searchBar.placeholder = @"Find city here...";
     
     // To ensure search results controller is presented in the current view controller
     self.definesPresentationContext = YES;
@@ -83,6 +82,7 @@
 #pragma mark - UISearchBarDelegate
 -(void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [searchBar resignFirstResponder];
+    
     
 }
 
@@ -118,8 +118,8 @@
 
 #pragma mark - UISearchResultsUpdating
 
--(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    
+-(void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
     // update the filtered array based on the search text
     NSString *searchText = searchController.searchBar.text;
     
@@ -130,15 +130,12 @@
     } else {
         
         [self fetchCitiesForSearchResult:searchText];
-        
-        // if has data
+
     }
 }
 
--(void) loadCitiList {
-//    [self fetchCitiesForSearchResult:@"Москва"];
-//    [self fetchCitiesForSearchResult:@"Нижний Новгород"];
-      [self fetchCitiesForSearchResult:@"Нижний"];
+-(void)loadCitiList:(NSString *)searchText {
+      [self fetchCitiesForSearchResult:searchText];
 }
 
 //-(void)configureSearchController {
@@ -176,17 +173,17 @@
     }];
 }
 
-- (void)fetchDetailForCiti:(Cityes *)citi {
+- (void)fetchDetailForCiti:(Cities *)city {
     
-    // get Citi details array:
+    // get City details array:
     // Array[2] = { WindResult, ConditionResult }
     [YQL fetchCityDetails:self.city completionBlock:^(NSArray *citiDetails) {
-        self.detailsForCiti = citiDetails;
+        self.detailsForCity = citiDetails;
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"%@", self.detailsForCiti);
+            NSLog(@"%@", self.detailsForCity);
             
-            // new controller.detailsForCiti = self.detailsForCiti;
+            // new controller.detailsForCity = self.detailsForCity;
             // new controller.city = self.city;
             // signal segue or etc ->
         });
@@ -201,10 +198,10 @@
     static NSString *CellId = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellId forIndexPath:indexPath];
     
-    Cityes *citi = self.resultForSavedCitiesTable[indexPath.row];
+    Cities *city = self.resultForSavedCitiesTable[indexPath.row];
     
-    cell.textLabel.text = citi.name;
-    cell.detailTextLabel.text = citi.woeid;
+    cell.textLabel.text = city.name;
+    cell.detailTextLabel.text = city.woeid;
     
     return cell;
 }
@@ -214,8 +211,8 @@
     return self.resultForSavedCitiesTable.count;
 }
 
--(void)searchResultControllerDidSelectCity:(Cityes *)city {
-    UIStoryboard *detailStoryboard = [UIStoryboard storyboardWithName:@"WeatherDetailsViewController" bundle:nil];
+-(void)searchResultControllerDidSelectCity:(Cities *)city {
+    UIStoryboard *detailStoryboard = [UIStoryboard storyboardWithName:@"DetailViewController" bundle:nil];
     
     DetailViewController *detailViewController = [detailStoryboard instantiateInitialViewController];
     detailViewController.city = city;

@@ -7,7 +7,7 @@
 //
 
 #import "DetailViewController.h"
-#import "Cityes.h"
+#import "Cities.h"
 
 @interface DetailViewController ()
 

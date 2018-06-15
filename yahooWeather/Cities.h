@@ -1,5 +1,5 @@
 //
-//  Cityes.h
+//  Cities.h
 //  yahooWeather
 //
 //  Created by Zaur Giyasov on 14/06/2018.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface Cityes : NSObject
+@interface Cities : NSObject
 
 @property (nonatomic, copy, readonly) NSString *name;
 @property (nonatomic, copy, readonly) NSString *woeid;
@@ -18,4 +18,3 @@
                        woeid:(NSString *)woeid;
 
 @end
-

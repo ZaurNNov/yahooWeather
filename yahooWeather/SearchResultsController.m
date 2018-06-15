@@ -7,7 +7,7 @@
 //
 
 #import "SearchResultsController.h"
-#import "Cityes.h"
+#import "Cities.h"
 
 @interface SearchResultsController ()
 
@@ -34,18 +34,18 @@ static NSString *CellId = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellId forIndexPath:indexPath];
     
-    Cityes *citi = self.cities[indexPath.row];
+    Cities *city = self.cities[indexPath.row];
     
-    cell.textLabel.text = citi.name;
-    cell.detailTextLabel.text = citi.woeid;
+    cell.textLabel.text = city.name;
+    cell.detailTextLabel.text = city.woeid;
     
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    Cityes *citi = self.cities[indexPath.row];
-    [self.delegate searchResultControllerDidSelectCity:citi];
+    Cities *city = self.cities[indexPath.row];
+    [self.delegate searchResultControllerDidSelectCity:city];
 }
 
 

@@ -7,7 +7,7 @@
 //
 
 #import "DataParser.h"
-#import "Cityes.h"
+#import "Cities.h"
 #import "WindResult.h"
 #import "ConditionResult.h"
 
@@ -25,7 +25,6 @@
     NSDictionary *queryDict = jsonResult[@"query"]; // All data
     
     NSDictionary *resultsDict = queryDict[@"results"]; // All results
-    // NSLog(@"Cityes model: %@", resultsDict);
     
     NSInteger fetchCount = [queryDict[@"count"] integerValue];
     
@@ -33,9 +32,9 @@
         NSDictionary *placesDict = resultsDict[@"place"]; // All plases
         
            for (NSDictionary *dict in placesDict) {
-               Cityes *citi = [[Cityes alloc] initWithName:[dict objectForKey:@"name"]
+               Cities *city = [[Cities alloc] initWithName:[dict objectForKey:@"name"]
                                                      woeid:[NSString stringWithFormat:@"%@", [dict objectForKey:@"woeid"]]];
-               [cities addObject:citi];
+               [cities addObject:city];
            }
     } else if (fetchCount == 1) {
         NSDictionary *placesDict = resultsDict[@"place"]; // Only 1 Citi
@@ -43,9 +42,9 @@
         NSString *townName = [placesDict objectForKey:@"name"];
         NSString *townWoeid = [placesDict objectForKey:@"woeid"];
         
-        Cityes *citi = [[Cityes alloc] initWithName:townName
+        Cities *city = [[Cities alloc] initWithName:townName
                                                woeid:[NSString stringWithFormat:@"%@", townWoeid]];
-        [cities addObject:citi];
+        [cities addObject:city];
     }
     
     return cities;

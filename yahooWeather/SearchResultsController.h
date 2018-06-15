@@ -7,17 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Cityes;
+@class Cities;
 
 @protocol SearchResultsControllerDelegate
 
--(void)searchResultControllerDidSelectCity:(Cityes *)city;
+-(void)searchResultControllerDidSelectCity:(Cities *)city;
 
 @end
 
 @interface SearchResultsController : UITableViewController
 
-@property (nonatomic, copy) NSArray <Cityes *>*cities;
+@property (nonatomic, copy) NSArray <Cities *>*cities;
 @property (nonatomic, weak) id<SearchResultsControllerDelegate> delegate;
 
 
