@@ -11,6 +11,6 @@
 @interface DataParser : NSObject
 
 + (NSArray *)parseCitiFromData:(NSData *)data;
-+ (NSArray *)resultsDictionaryFromData:(NSData *)data;
++ (NSDictionary *)resultsDictionaryFromData:(NSData *)data;
 
 @end

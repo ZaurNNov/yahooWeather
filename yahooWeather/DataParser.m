@@ -8,8 +8,6 @@
 
 #import "DataParser.h"
 #import "Cities.h"
-#import "WindResult.h"
-#import "ConditionResult.h"
 
 @implementation DataParser
 
@@ -50,13 +48,13 @@
     return cities;
 }
 
-+ (NSArray *)resultsDictionaryFromData:(NSData *)data
++ (NSDictionary *)resultsDictionaryFromData:(NSData *)data
 {
     id jsonResult = [NSJSONSerialization JSONObjectWithData:data
                                                     options:NSJSONReadingAllowFragments
                                                       error:nil];
     //NSLog(@"%@", jsonResult);
-    NSMutableArray *detailsResult = [[NSMutableArray alloc] init];
+    NSMutableDictionary *cityDetailsDict = [[NSMutableDictionary alloc] init];
     
     NSDictionary *queryDict = jsonResult[@"query"]; // All data
     
@@ -66,27 +64,29 @@
     
     NSDictionary *wind = [channelDict objectForKey:@"wind"];
     NSLog(@"WindResult model: %@", wind);
-
-    WindResult *wi = [[WindResult alloc] initWithChill:[wind objectForKey:@"chill"]
-                                                 direction:[wind objectForKey:@"direction"]
-                                                     speed:[wind objectForKey:@"speed"]];
-    
-    [detailsResult addObject:wi];
     
     NSDictionary *itemsDict = channelDict[@"item"]; // All details
     NSDictionary *condition = [itemsDict objectForKey:@"condition"];
     NSLog(@"ConditionResult model: %@", condition);
     
-    ConditionResult *cond = [[ConditionResult alloc] initWithCode:[condition objectForKey:@"code"]
-                                                            date:[condition objectForKey:@"date"]
-                                                            temp:[condition objectForKey:@"temp"]
-                                                            text:[condition objectForKey:@"text"]];
+    if (wind) {
+        [cityDetailsDict setObject:[wind objectForKey:@"chill"] forKey:@"chill"];
+        [cityDetailsDict setObject:[wind objectForKey:@"direction"] forKey:@"direction"];
+        [cityDetailsDict setObject:[wind objectForKey:@"speed"] forKey:@"speed"];
+    }
     
-    [detailsResult addObject:cond];
+    if (condition) {
+        [cityDetailsDict setObject:[condition objectForKey:@"code"] forKey:@"code"];
+        [cityDetailsDict setObject:[condition objectForKey:@"temp"] forKey:@"temp"];
+        [cityDetailsDict setObject:[condition objectForKey:@"text"] forKey:@"text"];
+    }
     
-    
-    //NSLog(@"%@", detailsResult); // pause
-    return detailsResult;
+    if (queryDict) {
+        [cityDetailsDict setObject:[queryDict objectForKey:@"created"] forKey:@"date"];
+    }
+
+    NSLog(@"%@", cityDetailsDict); // pause
+    return cityDetailsDict;
 }
 
 @end

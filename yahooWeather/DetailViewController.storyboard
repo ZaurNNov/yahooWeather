@@ -74,9 +74,20 @@
                         <viewLayoutGuide key="safeArea" id="li1-J7-Imy"/>
                     </view>
                     <navigationItem key="navigationItem" title="Save as Favorites?" id="I9J-qf-lPZ">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Ybb-yT-omX"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Ybb-yT-omX">
+                            <connections>
+                                <action selector="saveBarButtomAction:" destination="oJv-EU-2LE" id="Uka-lZ-SmO"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="cityNameLabel" destination="1vh-Qg-Xaw" id="eb9-Xf-amy"/>
+                        <outlet property="descriptionLabel" destination="Hha-nH-bPP" id="kye-Tm-7GR"/>
+                        <outlet property="detailsLabel" destination="2Nr-U7-abu" id="zjb-xm-OQI"/>
+                        <outlet property="saveBarButtom" destination="Ybb-yT-omX" id="jDW-wc-8ME"/>
+                        <outlet property="temperatureLabel" destination="aut-zP-tEC" id="u65-Uh-Ziu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fGS-Ce-3D4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

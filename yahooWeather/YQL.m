@@ -8,6 +8,7 @@
 
 #import "YQL.h"
 #import "DataParser.h"
+#import "Cities.h"
 
 #define QUERY_PREFIX @"http://query.yahooapis.com/v1/public/yql?q="
 #define QUERY_SUFFIX @"&format=json"
@@ -55,11 +56,11 @@
 }
 
 // Return City Detail in complition block
-+ (void)fetchCityDetails:(Cities *)city completionBlock:(void (^)(NSArray *citiDetails))completionBlock {
++ (void)fetchCityDetails:(Cities *)city completionBlock:(void (^)(NSDictionary *citiDetails))completionBlock {
     
     NSString *woeid = [NSString stringWithFormat:@"%@", [city woeid]];
     
-    NSMutableArray *details = [[NSMutableArray alloc] init]; // return
+    NSMutableDictionary *details = [[NSMutableDictionary alloc] init]; // return
     
     NSCharacterSet *set = [NSCharacterSet URLFragmentAllowedCharacterSet];
     NSString *encodedSELECT = [SELECT_SUFFIX stringByAddingPercentEncodingWithAllowedCharacters:set];
@@ -79,7 +80,10 @@
                                     NSURLResponse *response,
                                     NSError *error) {
                     
-                    [details addObjectsFromArray:[DataParser resultsDictionaryFromData:data]];
+                    
+                    
+                    [details setDictionary:[DataParser resultsDictionaryFromData:data]];
+                    
                     if (completionBlock !=nil) {
                         completionBlock(details.copy);
                     }

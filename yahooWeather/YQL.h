@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Cities.h"
+@class Cities;
 
 @interface YQL : NSObject
 
 + (void)fetchCitiesWithSearchText:(NSString *)searchText completionBlock:(void (^)(NSArray *cities))completionBlock;
-+ (void)fetchCityDetails:(Cities *)city completionBlock:(void (^)(NSArray *cityDetails))completionBlock;
++ (void)fetchCityDetails:(Cities *)city completionBlock:(void (^)(NSDictionary *cityDetails))completionBlock;
 
 @end

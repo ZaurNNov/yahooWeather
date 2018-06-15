@@ -19,8 +19,7 @@
 
 @property (strong, nonatomic) YQL *yql;
 @property (nonatomic) Cities *city;
-@property (nonatomic) NSArray *resultForSavedCitiesTable; // saved city - self tableview data
-@property (nonatomic, copy) NSArray *detailsForCity; // data for seque
+
 
 @property (nonatomic) UISearchController *searchController;
 @property (nonatomic) SearchResultsController *searchResultController;
@@ -134,58 +133,18 @@
     }
 }
 
--(void)loadCitiList:(NSString *)searchText {
-      [self fetchCitiesForSearchResult:searchText];
+-(void)reloadCitiList {
+//    [self.resultForSavedCitiesTable]
+    [self.tableView reloadData];
 }
 
-//-(void)configureSearchController {
-//    [self.searchController searchResultsController];
-//    self.searchController.searchResultsUpdater = self;
-//    self.searchController.searchBar.placeholder = @"Search City...";
-//    self.searchController.searchBar.delegate = self;
-//    [self.searchController.searchBar sizeToFit];
-//    self.tableView.tableHeaderView = [self.searchController searchBar];
-//}
-
-// Actions
-//- (IBAction)plusUIAction:(UIBarButtonItem *)sender
-//{
-//    if (self.searchResult[0]) {
-//        self.city = self.searchResult[0];
-//        [self fetchDetailForCiti: self.city];
-//    }
-//}
-
-//- (IBAction)searchUIAction:(UIBarButtonItem *)sender
-//{
-//    [self fetchCitiesForSearchResult:@"Нижний Новгород"];
-//}
-
 - (void)fetchCitiesForSearchResult:(NSString *)searchText {
-    //NSString *quer1 = [NSString stringWithFormat:@"select woeid,name from geo.places(2) where text=\"%@\"", @"Moscow"];
     
     [YQL fetchCitiesWithSearchText:searchText completionBlock:^(NSArray *cities) {
         self.searchResultController.cities = cities;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.searchResultController.tableView reloadData];
-        });
-    }];
-}
-
-- (void)fetchDetailForCiti:(Cities *)city {
-    
-    // get City details array:
-    // Array[2] = { WindResult, ConditionResult }
-    [YQL fetchCityDetails:self.city completionBlock:^(NSArray *citiDetails) {
-        self.detailsForCity = citiDetails;
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"%@", self.detailsForCity);
-            
-            // new controller.detailsForCity = self.detailsForCity;
-            // new controller.city = self.city;
-            // signal segue or etc ->
         });
     }];
 }

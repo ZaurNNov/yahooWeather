@@ -13,8 +13,6 @@
 		CE03791520D245F600859237 /* DetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE03791420D245F600859237 /* DetailViewController.storyboard */; };
 		CE03791820D25BEB00859237 /* Cities.m in Sources */ = {isa = PBXBuildFile; fileRef = CE03791720D25BEB00859237 /* Cities.m */; };
 		CE03791B20D2621C00859237 /* DataParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE03791A20D2621C00859237 /* DataParser.m */; };
-		CE03792120D2A2BD00859237 /* WindResult.m in Sources */ = {isa = PBXBuildFile; fileRef = CE03792020D2A2BD00859237 /* WindResult.m */; };
-		CE03792420D2A2E800859237 /* ConditionResult.m in Sources */ = {isa = PBXBuildFile; fileRef = CE03792320D2A2E800859237 /* ConditionResult.m */; };
 		CEBED5F120D16F0B0068C41C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBED5F020D16F0B0068C41C /* AppDelegate.m */; };
 		CEBED5F420D16F0B0068C41C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBED5F320D16F0B0068C41C /* MainViewController.m */; };
 		CEBED5F720D16F0B0068C41C /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEBED5F520D16F0B0068C41C /* MainViewController.storyboard */; };
@@ -35,10 +33,6 @@
 		CE03791720D25BEB00859237 /* Cities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Cities.m; sourceTree = "<group>"; };
 		CE03791920D2621C00859237 /* DataParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataParser.h; sourceTree = "<group>"; };
 		CE03791A20D2621C00859237 /* DataParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataParser.m; sourceTree = "<group>"; };
-		CE03791F20D2A2BD00859237 /* WindResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WindResult.h; sourceTree = "<group>"; };
-		CE03792020D2A2BD00859237 /* WindResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WindResult.m; sourceTree = "<group>"; };
-		CE03792220D2A2E800859237 /* ConditionResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConditionResult.h; sourceTree = "<group>"; };
-		CE03792320D2A2E800859237 /* ConditionResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConditionResult.m; sourceTree = "<group>"; };
 		CEBED5EC20D16F0B0068C41C /* yahooWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yahooWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEBED5EF20D16F0B0068C41C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CEBED5F020D16F0B0068C41C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -101,10 +95,6 @@
 				CE03791A20D2621C00859237 /* DataParser.m */,
 				CE03791620D25BEB00859237 /* Cities.h */,
 				CE03791720D25BEB00859237 /* Cities.m */,
-				CE03791F20D2A2BD00859237 /* WindResult.h */,
-				CE03792020D2A2BD00859237 /* WindResult.m */,
-				CE03792220D2A2E800859237 /* ConditionResult.h */,
-				CE03792320D2A2E800859237 /* ConditionResult.m */,
 			);
 			path = yahooWeather;
 			sourceTree = "<group>";
@@ -187,9 +177,7 @@
 				CEBED5F120D16F0B0068C41C /* AppDelegate.m in Sources */,
 				CE03791820D25BEB00859237 /* Cities.m in Sources */,
 				CE03791B20D2621C00859237 /* DataParser.m in Sources */,
-				CE03792120D2A2BD00859237 /* WindResult.m in Sources */,
 				CE03791320D23F6800859237 /* DetailViewController.m in Sources */,
-				CE03792420D2A2E800859237 /* ConditionResult.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
