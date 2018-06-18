@@ -13,6 +13,7 @@
 		CE03791520D245F600859237 /* DetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE03791420D245F600859237 /* DetailViewController.storyboard */; };
 		CE03791820D25BEB00859237 /* Cities.m in Sources */ = {isa = PBXBuildFile; fileRef = CE03791720D25BEB00859237 /* Cities.m */; };
 		CE03791B20D2621C00859237 /* DataParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE03791A20D2621C00859237 /* DataParser.m */; };
+		CE1A591920D7953E00C7ADD3 /* NSObject+customCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1A591820D7953E00C7ADD3 /* NSObject+customCategory.m */; };
 		CEBED5F120D16F0B0068C41C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBED5F020D16F0B0068C41C /* AppDelegate.m */; };
 		CEBED5F420D16F0B0068C41C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBED5F320D16F0B0068C41C /* MainViewController.m */; };
 		CEBED5F720D16F0B0068C41C /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEBED5F520D16F0B0068C41C /* MainViewController.storyboard */; };
@@ -33,6 +34,8 @@
 		CE03791720D25BEB00859237 /* Cities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Cities.m; sourceTree = "<group>"; };
 		CE03791920D2621C00859237 /* DataParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataParser.h; sourceTree = "<group>"; };
 		CE03791A20D2621C00859237 /* DataParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataParser.m; sourceTree = "<group>"; };
+		CE1A591720D7953E00C7ADD3 /* NSObject+customCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+customCategory.h"; sourceTree = "<group>"; };
+		CE1A591820D7953E00C7ADD3 /* NSObject+customCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+customCategory.m"; sourceTree = "<group>"; };
 		CEBED5EC20D16F0B0068C41C /* yahooWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yahooWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEBED5EF20D16F0B0068C41C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CEBED5F020D16F0B0068C41C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -95,6 +98,8 @@
 				CE03791A20D2621C00859237 /* DataParser.m */,
 				CE03791620D25BEB00859237 /* Cities.h */,
 				CE03791720D25BEB00859237 /* Cities.m */,
+				CE1A591720D7953E00C7ADD3 /* NSObject+customCategory.h */,
+				CE1A591820D7953E00C7ADD3 /* NSObject+customCategory.m */,
 			);
 			path = yahooWeather;
 			sourceTree = "<group>";
@@ -170,6 +175,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE1A591920D7953E00C7ADD3 /* NSObject+customCategory.m in Sources */,
 				63269E1C20D44B5400CCE222 /* SearchResultsController.m in Sources */,
 				CEBED5F420D16F0B0068C41C /* MainViewController.m in Sources */,
 				CE03790F20D2394700859237 /* YQL.m in Sources */,

@@ -29,7 +29,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temperature" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aut-zP-tEC">
-                                <rect key="frame" x="16" y="168" width="343" height="75"/>
+                                <rect key="frame" x="16" y="220" width="343" height="75"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="aut-zP-tEC" secondAttribute="height" multiplier="343:75" id="Zzr-ks-by7"/>
                                 </constraints>
@@ -46,8 +46,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hha-nH-bPP">
-                                <rect key="frame" x="16" y="251" width="343" height="75"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="Hha-nH-bPP">
+                                <rect key="frame" x="16" y="303" width="343" height="75"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Hha-nH-bPP" secondAttribute="height" multiplier="343:75" id="Ci1-PM-Bon"/>
                                 </constraints>
@@ -55,15 +55,24 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City ID" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yod-wl-XXa">
+                                <rect key="frame" x="16" y="168" width="343" height="18"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="li1-J7-Imy" firstAttribute="trailing" secondItem="aut-zP-tEC" secondAttribute="trailing" constant="16" id="5Zp-zz-GGI"/>
+                            <constraint firstItem="Yod-wl-XXa" firstAttribute="top" secondItem="1vh-Qg-Xaw" secondAttribute="bottom" constant="8" id="D5v-GG-Akm"/>
                             <constraint firstItem="2Nr-U7-abu" firstAttribute="leading" secondItem="li1-J7-Imy" secondAttribute="leading" constant="16" id="HLI-Sy-jaa"/>
-                            <constraint firstItem="aut-zP-tEC" firstAttribute="top" secondItem="1vh-Qg-Xaw" secondAttribute="bottom" constant="8" id="Oob-Uh-aAh"/>
+                            <constraint firstItem="aut-zP-tEC" firstAttribute="top" secondItem="Yod-wl-XXa" secondAttribute="bottom" constant="34" id="Oob-Uh-aAh"/>
                             <constraint firstItem="Hha-nH-bPP" firstAttribute="top" secondItem="aut-zP-tEC" secondAttribute="bottom" constant="8" symbolic="YES" id="QUM-J2-dNT"/>
                             <constraint firstItem="aut-zP-tEC" firstAttribute="leading" secondItem="li1-J7-Imy" secondAttribute="leading" constant="16" id="QiZ-fN-ZXt"/>
                             <constraint firstItem="li1-J7-Imy" firstAttribute="trailing" secondItem="2Nr-U7-abu" secondAttribute="trailing" constant="16" id="VQp-IP-3xN"/>
+                            <constraint firstItem="li1-J7-Imy" firstAttribute="trailing" secondItem="Yod-wl-XXa" secondAttribute="trailing" constant="16" id="XsQ-fe-3cI"/>
+                            <constraint firstItem="Yod-wl-XXa" firstAttribute="leading" secondItem="li1-J7-Imy" secondAttribute="leading" constant="16" id="gVC-NZ-0D5"/>
                             <constraint firstItem="li1-J7-Imy" firstAttribute="trailing" secondItem="1vh-Qg-Xaw" secondAttribute="trailing" constant="16" id="gmq-sI-BDY"/>
                             <constraint firstItem="li1-J7-Imy" firstAttribute="trailing" secondItem="Hha-nH-bPP" secondAttribute="trailing" constant="16" id="kPN-Vc-oog"/>
                             <constraint firstItem="1vh-Qg-Xaw" firstAttribute="top" secondItem="li1-J7-Imy" secondAttribute="top" constant="36" id="mWr-yh-Gge"/>
@@ -82,6 +91,7 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="cityID" destination="Yod-wl-XXa" id="dfK-nG-xEj"/>
                         <outlet property="cityNameLabel" destination="1vh-Qg-Xaw" id="eb9-Xf-amy"/>
                         <outlet property="descriptionLabel" destination="Hha-nH-bPP" id="kye-Tm-7GR"/>
                         <outlet property="detailsLabel" destination="2Nr-U7-abu" id="zjb-xm-OQI"/>

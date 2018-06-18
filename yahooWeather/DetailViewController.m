@@ -9,6 +9,8 @@
 #import "DetailViewController.h"
 #import "Cities.h"
 #import "YQL.h"
+#import "NSObject+customCategory.h"
+#import "MainViewController.h"
 
 
 @interface DetailViewController ()
@@ -17,9 +19,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *temperatureLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *cityID;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtom;
 - (IBAction)saveBarButtomAction:(UIBarButtonItem *)sender;
+@property (nonatomic) BOOL isSaved;
 
 @property (nonatomic, copy) NSDictionary *detailsForCity; // data from seque etc
 
@@ -29,8 +33,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self loadCityDetail:self.city];
+    self.isSaved = NO;
 }
 
 -(void)loadCityDetail:(Cities *)city {
@@ -63,20 +67,44 @@
     [self.detailsForCity objectForKey:@"text"];
     */
     
+    static NSString *notFound = @"Not found";
     NSLog(@"%@", self.detailsForCity);
     
-    NSString *detailText = [NSString stringWithFormat:@"%@ %@ speed:%@", [self.detailsForCity objectForKey:@"chill"], [self.detailsForCity objectForKey:@"direction"], [self.detailsForCity objectForKey:@"speed"]];
+    // if nil = @"example text"
     
-    NSString *cityNameText = self.city.name;
+
     
-    NSString *descriptionText = [NSString stringWithFormat:@"%@ - %@ \n%@", [self.detailsForCity objectForKey:@"code"], [self.detailsForCity objectForKey:@"text"], [self.detailsForCity objectForKey:@"date"]];
+    // Citi name & woeid
+    self.cityNameLabel.text = self.city.name; // Fetch City name
+    self.cityID.text = [NSString stringWithFormat:@"City id: %@", self.city.woeid]; // City ID
     
-    NSString *tempText = [self.detailsForCity objectForKey:@"temp"];
+    // Temperature
+    if ([self.detailsForCity objectForKey:@"temp"]) {
+        double temp = [self celsiosFromFahrenheit:[[self.detailsForCity objectForKey:@"temp"] intValue]];
+        self.temperatureLabel.text = [NSString stringWithFormat:@"%.1f ℃",temp];
+        
+    } else {
+        self.temperatureLabel.text = notFound;
+    }
     
-    self.detailsLabel.text = detailText; // Fetch Date
-    self.cityNameLabel.text = cityNameText; // Fetch City name
+    // Description text
+    NSString *descriptionText = [NSString stringWithFormat:@"%@\nspeed: %@", [self.detailsForCity objectForKey:@"text"], [self.detailsForCity objectForKey:@"speed"]];
     self.descriptionLabel.text = descriptionText; // Fetch wind and other data
-    self.temperatureLabel.text = tempText; // Fetch temp in Celios
+    
+    // Detail text = fetch date
+    if ([self.detailsForCity objectForKey:@"date"]) {
+        /*
+        // @"yyyy MMM dd hh:mm" - show in app
+        // Fetch Date
+        NSDate *fetchDate = [self.detailsForCity objectForKey:@"date"];
+        self.detailsLabel.text = [self setCustomStringFromDate:fetchDate];
+         */
+        self.detailsLabel.text = [self setCustomStringFromDate:[NSDate date]]; // current date
+        
+    } else {
+        
+        self.detailsLabel.text = [self setCustomStringFromDate:[NSDate date]]; // current date
+    }
 }
 
 - (void)fetchDetailForCiti:(Cities *)city {
@@ -96,14 +124,14 @@
 }
 
 - (IBAction)saveBarButtomAction:(UIBarButtonItem *)sender {
-
-    // self.city -> to mainViewController
-    // create array and add to "main" resultForSavedCitiesTable array
     
-    NSArray <Cities *>*city = [NSArray arrayWithObject:self.city];
-    NSLog(@"%@", city);
-    
-//    self.navigationController.presentingViewController.resultForSavedCitiesTable
-    
+    [self saveCurrentCity:self.city];
+    [self.navigationController popViewControllerAnimated:YES];
+    //self.navigationController.viewControllers; // массив контроллеров в навигейшн контролллере (предпоследний - родитель этого)
 }
+
+- (void)saveCurrentCity:(Cities *)city {
+    [self.delegate saveCurrentCity:city];
+}
+
 @end

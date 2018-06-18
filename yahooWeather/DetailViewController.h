@@ -10,8 +10,16 @@
 
 @class Cities;
 
+@protocol DetailViewControllerSaveCityProtocol
+
+- (void)saveCurrentCity:(Cities *)city;
+
+@end
+
 @interface DetailViewController : UIViewController
 
 @property (nonatomic) Cities *city;
+
+@property (nonatomic, weak) id <DetailViewControllerSaveCityProtocol> delegate;
 
 @end

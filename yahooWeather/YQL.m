@@ -32,7 +32,7 @@
     NSString *encodedString = [query stringByAddingPercentEncodingWithAllowedCharacters:set];
     NSString *strRequest = [NSString stringWithFormat:@"%@%@%@", QUERY_PREFIX, encodedString, QUERY_SUFFIX];
     
-    NSLog(@"/n%@: %@ -> %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), strRequest);
+    NSLog(@"\n%@: %@ -> %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), strRequest);
     
     NSURLSession *session = [NSURLSession sharedSession];
     
