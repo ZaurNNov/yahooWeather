@@ -24,7 +24,7 @@
 // Return Cities Array in complition block
 + (void)fetchCitiesWithSearchText:(NSString *)searchText completionBlock:(void (^)(NSArray *cities))completionBlock {
     
-    NSString *query = [NSString stringWithFormat:@"select woeid,name from geo.places(2) where text=\"%@\"", searchText];
+    NSString *query = [NSString stringWithFormat:@"select woeid,name from geo.places(10) where text=\"%@\"", searchText];
     
     NSMutableArray *arr = [NSMutableArray array]; // Return Cities array
     

@@ -70,6 +70,7 @@
     
     // Required (?) to set place a search bar in a navigation bar
     self.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    self.searchBar.showsCancelButton = YES;
     [self.searchBar sizeToFit];
     
     // This is where you set the search bar in the navigation bar, instead of using table view's header ...
@@ -238,6 +239,13 @@
     detailViewController.city = city;
     detailViewController.delegate = self;
     [self.navigationController pushViewController:detailViewController animated:YES];
+    detailViewController.view;
+    detailViewController.view;
+    NSLog(@"DBG After pushViewController");
+    self.searchResultActive = NO;
+    int a = 4;
+    sleep(5);
+    NSLog(@"DBG After sleep");
 }
 
 -(void)selectCity:(Cities *)city
