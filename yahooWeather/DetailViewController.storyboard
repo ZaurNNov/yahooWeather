@@ -14,7 +14,7 @@
         <!--Save as Favorites?-->
         <scene sceneID="pqQ-jD-Guj">
             <objects>
-                <viewController id="oJv-EU-2LE" customClass="DetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oJv-EU-2LE" customClass="DetailViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="D8j-pw-di7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

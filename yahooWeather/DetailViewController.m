@@ -23,7 +23,6 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtom;
 - (IBAction)saveBarButtomAction:(UIBarButtonItem *)sender;
-@property (nonatomic) BOOL isSaved;
 
 @property (nonatomic, copy) NSDictionary *detailsForCity; // data from seque etc
 
@@ -34,7 +33,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadCityDetail:self.city];
-    self.isSaved = NO;
 }
 
 -(void)loadCityDetail:(Cities *)city {
@@ -112,7 +110,6 @@
     // get City details array:
     // Array[2] = { WindResult, ConditionResult }
     [YQL fetchCityDetails:self.city completionBlock:^(NSDictionary *citiDetails) {
-        
         
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"%@", self.detailsForCity);

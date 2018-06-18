@@ -10,7 +10,7 @@
 
 @interface MainViewController : UIViewController
 
-//@property (nonatomic) NSMutableArray *resultForSavedCitiesTable; // saved city - self tableview data
+//@property (nonatomic) NSMutableArray *savedCities; // saved city - self tableview data
 
 @end
 

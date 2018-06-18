@@ -55,36 +55,42 @@
                                                       error:nil];
     //NSLog(@"%@", jsonResult);
     NSMutableDictionary *cityDetailsDict = [[NSMutableDictionary alloc] init];
+    NSNull *nulResult = [[NSNull alloc] init];
     
     NSDictionary *queryDict = jsonResult[@"query"]; // All data
     
     NSDictionary *resultsDict = queryDict[@"results"]; // All results
     
-    NSDictionary *channelDict = resultsDict[@"channel"]; // All details
-    
-    NSDictionary *wind = [channelDict objectForKey:@"wind"];
-    NSLog(@"WindResult model: %@", wind);
-    
-    NSDictionary *itemsDict = channelDict[@"item"]; // All details
-    NSDictionary *condition = [itemsDict objectForKey:@"condition"];
-    NSLog(@"ConditionResult model: %@", condition);
-    
-    if (wind) {
-        [cityDetailsDict setObject:[wind objectForKey:@"chill"] forKey:@"chill"];
-        [cityDetailsDict setObject:[wind objectForKey:@"direction"] forKey:@"direction"];
-        [cityDetailsDict setObject:[wind objectForKey:@"speed"] forKey:@"speed"];
+    if (resultsDict != nulResult) {
+        NSDictionary *channelDict = resultsDict[@"channel"]; // All details
+        
+        if (channelDict) {
+            NSDictionary *wind = [channelDict objectForKey:@"wind"];
+            NSLog(@"WindResult model: %@", wind);
+            
+            NSDictionary *itemsDict = channelDict[@"item"]; // All details
+            NSDictionary *condition = [itemsDict objectForKey:@"condition"];
+            NSLog(@"ConditionResult model: %@", condition);
+            
+            if (wind) {
+                [cityDetailsDict setObject:[wind objectForKey:@"chill"] forKey:@"chill"];
+                [cityDetailsDict setObject:[wind objectForKey:@"direction"] forKey:@"direction"];
+                [cityDetailsDict setObject:[wind objectForKey:@"speed"] forKey:@"speed"];
+            }
+            
+            if (condition) {
+                [cityDetailsDict setObject:[condition objectForKey:@"code"] forKey:@"code"];
+                [cityDetailsDict setObject:[condition objectForKey:@"temp"] forKey:@"temp"];
+                [cityDetailsDict setObject:[condition objectForKey:@"text"] forKey:@"text"];
+            }
+            
+            if (queryDict) {
+                [cityDetailsDict setObject:[queryDict objectForKey:@"created"] forKey:@"date"];
+            }
+        }
     }
     
-    if (condition) {
-        [cityDetailsDict setObject:[condition objectForKey:@"code"] forKey:@"code"];
-        [cityDetailsDict setObject:[condition objectForKey:@"temp"] forKey:@"temp"];
-        [cityDetailsDict setObject:[condition objectForKey:@"text"] forKey:@"text"];
-    }
     
-    if (queryDict) {
-        [cityDetailsDict setObject:[queryDict objectForKey:@"created"] forKey:@"date"];
-    }
-
     NSLog(@"%@", cityDetailsDict); // pause
     return cityDetailsDict;
 }

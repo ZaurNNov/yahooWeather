@@ -9,10 +9,10 @@
 #import "MainViewController.h"
 #import "YQL.h"
 #import "Cities.h"
-#import "SearchResultsController.h"
+//#import "SearchResultsController.h"
 #import "DetailViewController.h"
 
-@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate, SearchResultsControllerDelegate, DetailViewControllerSaveCityProtocol>
+@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate, DetailViewControllerSaveCityProtocol>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UINavigationItem *NavigationBar;
@@ -20,9 +20,12 @@
 @property (strong, nonatomic) YQL *yql;
 @property (nonatomic) Cities *city;
 
-@property (nonatomic) NSMutableArray <Cities *>*resultForSavedCitiesTable; // saved city - self tableview data
-@property (nonatomic) UISearchController *searchController;
-@property (nonatomic) SearchResultsController *searchResultController;
+@property (nonatomic) NSMutableArray <Cities *>*savedCities; // saved city - self tableview data
+@property (nonatomic) NSMutableArray <Cities *>*searchCities; // search Result Data
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (nonatomic) BOOL searchResultActive; // key for visible search or saved data
+
+//@property (nonatomic) UISearchController *searchController;
 
 @end
 
@@ -30,8 +33,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.resultForSavedCitiesTable = [NSMutableArray array];
+    self.savedCities = [NSMutableArray array];
+    self.searchCities = [NSMutableArray array];
+    self.searchResultActive = false;
+    
     self.tableView.rowHeight = 70; // self savedCities
+    self.tableView.tableHeaderView = nil;
     
     // Init YQL
     self.yql = [[YQL alloc] init];
@@ -44,93 +51,99 @@
     [super viewWillAppear:animated];
     
     [self reloadCityList];
-//    // Create search
-//    [self createSerachControllerAndConfigureIt];
 }
 
 -(void)createSerachControllerAndConfigureIt {
     
     // Create a UITableViewController to present search results since the actual view controller is not a subclass of UITableViewController in this case
-    self.searchResultController = [[SearchResultsController alloc] init];
-    self.searchResultController.delegate = self;
+    // self.searchResultController = [[SearchResultsController alloc] init];
+    // self.searchResultController.delegate = self;
     
     // Init UISearchController with the search results controller
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultController];
+    //self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     
     // Link the search controller
-    self.searchController.searchResultsUpdater = self;
+    //self.searchController.searchResultsUpdater = self;
     
     // This is obviously needed because the search bar will be contained in the navigation bar
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    //self.searchController.hidesNavigationBarDuringPresentation = NO;
     
     // Required (?) to set place a search bar in a navigation bar
-    self.searchController.searchBar.searchBarStyle = UISearchBarStyleDefault;
-    [self.searchController.searchBar sizeToFit];
+    self.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    [self.searchBar sizeToFit];
     
     // This is where you set the search bar in the navigation bar, instead of using table view's header ...
-    self.navigationItem.titleView = self.searchController.searchBar;
-    self.searchController.searchBar.placeholder = @"Find city here...";
+    self.navigationItem.titleView = self.searchBar;
+    self.searchBar.placeholder = @"Find city here...";
     
     // To ensure search results controller is presented in the current view controller
     self.definesPresentationContext = YES;
     
     // Setting delegates and other stuff
-    self.searchController.delegate = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.delegate = self;
+    //self.searchController.delegate = self;
+    //self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchBar.delegate = self;
     
     /*
-     // Add the search bar
-     self.tableView.tableHeaderView = searchController.searchBar;
-     self.definesPresentationContext = YES;
-     [searchController.searchBar sizeToFit];
+     // Add the search bar in header
+     self.tableView.tableHeaderView = self.searchBar;
      */
 }
 
 #pragma mark - UISearchBarDelegate
 -(void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [searchBar resignFirstResponder];
+    self.searchResultActive = true;
+    [self reloadCityList];
 }
 
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+    self.searchResultActive = false;
+    [self.searchCities removeAllObjects];
     [self reloadCityList];
-    
     NSLog(@"%@: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 }
 
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
-{
-    return YES;
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    [self.searchCities removeAllObjects];
+    self.searchResultActive = true;
 }
 
-#pragma mark - UISearchControllerDelegate
-// Called after the search controller's search bar has agreed to begin editing or when
-// 'active' is set to YES.
-// If you choose not to present the controller yourself or do not implement this method,
-// a default presentation is performed on your behalf.
-//
-// Implement this method if the default presentation is not adequate for your purposes.
-//
-- (void)presentSearchController:(UISearchController *)searchController {
-    
-}
-
-- (void)willPresentSearchController:(UISearchController *)searchController {
-    // do something before the search controller is presented
-}
-
-- (void)didPresentSearchController:(UISearchController *)searchController {
-    // do something after the search controller is presented
-}
-
-- (void)willDismissSearchController:(UISearchController *)searchController {
-    // do something before the search controller is dismissed
+-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+    self.searchResultActive = false;
+    [searchBar resignFirstResponder];
     [self reloadCityList];
 }
 
-- (void)didDismissSearchController:(UISearchController *)searchController {
-    // do something after the search controller is dismissed
-}
+//#pragma mark - UISearchControllerDelegate
+//// Called after the search controller's search bar has agreed to begin editing or when
+//// 'active' is set to YES.
+//// If you choose not to present the controller yourself or do not implement this method,
+//// a default presentation is performed on your behalf.
+////
+//// Implement this method if the default presentation is not adequate for your purposes.
+////
+//- (void)presentSearchController:(UISearchController *)searchController {
+//
+//}
+//
+//- (void)willPresentSearchController:(UISearchController *)searchController {
+//    // do something before the search controller is presented
+//}
+//
+//- (void)didPresentSearchController:(UISearchController *)searchController {
+//    // do something after the search controller is presented
+//}
+//
+//- (void)willDismissSearchController:(UISearchController *)searchController {
+//    // do something before the search controller is dismissed
+//    [self reloadCityList];
+//}
+//
+//- (void)didDismissSearchController:(UISearchController *)searchController {
+//    // do something after the search controller is dismissed
+//}
 
 #pragma mark - UISearchResultsUpdating
 
@@ -148,8 +161,21 @@
     }
 }
 
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    
+    // Fetching
+    [self fetchCitiesForSearchResult:searchText];
+//    [self reloadCityList];
+}
+
+//-(void)searchText:(NSString *)text {
+//    [self fetchCitiesForSearchResult:text];
+//}
+
+
 -(void)reloadCityList {
-//    [self.resultForSavedCitiesTable]
+    self.searchResultActive = false;
+    [self.searchBar resignFirstResponder];
     [self.tableView reloadData];
 }
 
@@ -158,36 +184,15 @@
     return searchController.searchBar.text;
 }
 
--(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    
-}
-
 - (void)fetchCitiesForSearchResult:(NSString *)searchText {
     
     [YQL fetchCitiesWithSearchText:searchText completionBlock:^(NSArray *cities) {
-        self.searchResultController.cities = cities;
+        [self.searchCities removeAllObjects];
+        [self.searchCities addObjectsFromArray:cities];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.searchResultController.tableView reloadData];
-        });
-    }];
-}
-
-- (void)fetchCitiesWithReturn:(NSString *)searchText completionBlock:(void (^)(NSArray *cities))completionBlock {
-    
-    NSMutableArray *arr = [NSMutableArray array]; // Return Cities array
-    
-    [YQL fetchCitiesWithSearchText:searchText completionBlock:^(NSArray *cities) {
-        self.searchResultController.cities = cities;
-        [arr addObjectsFromArray:cities];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.searchResultController.tableView reloadData];
-            
-            if (completionBlock !=nil) {
-                completionBlock(arr.copy);
-                [self.tableView reloadData];
-            }
+            self.searchResultActive = true;
+            [self.tableView reloadData];
         });
     }];
 }
@@ -200,17 +205,26 @@
     static NSString *CellId = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellId forIndexPath:indexPath];
     
-    Cities *city = self.resultForSavedCitiesTable[indexPath.row];
-    
-    cell.textLabel.text = city.name;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"ID: %@", city.woeid];
+    if (self.searchResultActive) {
+        Cities *city = self.searchCities[indexPath.row];
+        cell.textLabel.text = city.name;
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"ID: %@", city.woeid];
+    } else {
+        Cities *city = self.savedCities[indexPath.row];
+        cell.textLabel.text = city.name;
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"ID: %@", city.woeid];
+    }
     
     return cell;
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.resultForSavedCitiesTable.count;
+    if (self.searchResultActive) {
+        return self.searchCities.count;
+    } else {
+        return self.savedCities.count;
+    }
 }
 
 #pragma mark - UISearchResults delegate
@@ -219,41 +233,55 @@
 {
     UIStoryboard *detailStoryboard = [UIStoryboard storyboardWithName:@"DetailViewController" bundle:nil];
     
-    DetailViewController *detailViewController = [detailStoryboard instantiateInitialViewController];
+    DetailViewController *detailViewController = [detailStoryboard instantiateViewControllerWithIdentifier:@"DetailVC"];
+    
     detailViewController.city = city;
     detailViewController.delegate = self;
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
--(void)searchResultControllerDidSelectCity:(Cities *)city
+-(void)selectCity:(Cities *)city
 {
     [self detailViewCity:city];
 }
 
+// Delegate method for DetailVC
 - (void)saveCurrentCity:(Cities *)city {
     
-    [self.resultForSavedCitiesTable addObject:city];
-    [self reloadCityList];
-    NSLog(@"\nPausa");
-    
-//    for (Cities *searchCurrentCity in self.resultForSavedCitiesTable) {
-//        if (searchCurrentCity == city) {
+//    for (Cities *oldCity in self.savedCities) {
+//        if ([city isEqual:oldCity]) {
 //            return;
 //        } else {
-//            [self.resultForSavedCitiesTable addObject:city];
-//            [self reloadCityList];
+//            [self.savedCities addObject:city];
 //        }
 //    }
+    
+    NSLog(@"\nPausa");
+    
+    // нужна проверка на наличие города в имеющихся
+    // хотябы по ИД
+    
+    [self.savedCities addObject:city];
+    [self.searchCities removeAllObjects];
+    self.searchResultActive = false;
+    [self.searchBar resignFirstResponder];
+
+    [self reloadCityList];
+
 }
 
 // self table select row method
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self detailViewCity:self.resultForSavedCitiesTable[indexPath.row]];
+    if (self.searchResultActive) {
+        [self selectCity:self.searchCities[indexPath.row]];
+    } else {
+        [self selectCity:self.savedCities[indexPath.row]];
+    }
 }
 
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    //
 }
 
 
