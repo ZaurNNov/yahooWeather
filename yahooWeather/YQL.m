@@ -24,15 +24,15 @@
 // Return Cities Array in complition block
 + (void)fetchCitiesWithSearchText:(NSString *)searchText completionBlock:(void (^)(NSArray *cities))completionBlock {
     
-    NSString *query = [NSString stringWithFormat:@"select woeid,name from geo.places(10) where text=\"%@\"", searchText];
+    NSString *query = [NSString stringWithFormat:@"select woeid, name from geo.places(10) where text=\"%@\"", searchText];
     
-    NSMutableArray *arr = [NSMutableArray array]; // Return Cities array
+//    NSMutableArray *arr = [NSMutableArray array]; // Return Cities array
     
     NSCharacterSet *set = [NSCharacterSet URLFragmentAllowedCharacterSet];
     NSString *encodedString = [query stringByAddingPercentEncodingWithAllowedCharacters:set];
     NSString *strRequest = [NSString stringWithFormat:@"%@%@%@", QUERY_PREFIX, encodedString, QUERY_SUFFIX];
     
-    NSLog(@"\n%@: %@ -> %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), strRequest);
+//    NSLog(@"\n%@: %@ -> %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), strRequest);
     
     NSURLSession *session = [NSURLSession sharedSession];
     
@@ -46,13 +46,25 @@
                                     NSURLResponse *response,
                                     NSError *error) {
                     
-                    [arr addObjectsFromArray:[DataParser parseCitiFromData:data]];
-                    if (completionBlock !=nil) {
-                        completionBlock(arr.copy);
+                    NSArray *array = [NSArray arrayWithArray:[DataParser parseCitiFromData:data]];
+//                    NSMutableArray *arrays = [[NSMutableArray alloc] init];
+//                    [arrays addObjectsFromArray:array];
+//                    [arr addObjectsFromArray:[DataParser parseCitiFromData:data]];
+                    if (completionBlock != nil) {
+                        completionBlock(array);
+//                        completionBlock(arr.copy);
                     }
+//                    arrays = nil;
+                    array = nil;
                     //NSLog(@"%@", arr);
-                    
                 }] resume];
+    
+    query = nil;
+    set = nil;
+    encodedString = nil;
+    strRequest = nil;
+    session = nil;
+    request = nil;
 }
 
 // Return City Detail in complition block
@@ -60,7 +72,7 @@
     
     NSString *woeid = [NSString stringWithFormat:@"%@", [city woeid]];
     
-    NSMutableDictionary *details = [[NSMutableDictionary alloc] init]; // return
+//    NSMutableDictionary *details = [[NSMutableDictionary alloc] init]; // return
     
     NSCharacterSet *set = [NSCharacterSet URLFragmentAllowedCharacterSet];
     NSString *encodedSELECT = [SELECT_SUFFIX stringByAddingPercentEncodingWithAllowedCharacters:set];
@@ -68,8 +80,7 @@
     
     NSString *strRequest = [NSString stringWithFormat:@"%@%@%@%@", QUERY_PREFIX, encodedSELECT, encodedString, QUERY_SUFFIX];
     
-    NSLog(@"/n%@: %@ -> %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), strRequest);
-    
+//    NSLog(@"/n%@: %@ -> %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), strRequest);
     NSURLSession *session = [NSURLSession sharedSession];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", strRequest]] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:24 *60];
@@ -80,16 +91,26 @@
                                     NSURLResponse *response,
                                     NSError *error) {
                     
+//                    [details setDictionary:[DataParser resultsDictionaryFromData:data]];
+                    NSDictionary *dict = [[NSDictionary alloc] initWithDictionary:[DataParser resultsDictionaryFromData:data] copyItems:YES];
                     
-                    
-                    [details setDictionary:[DataParser resultsDictionaryFromData:data]];
-                    
-                    if (completionBlock !=nil) {
-                        completionBlock(details.copy);
+                    if (completionBlock != nil) {
+                        completionBlock(dict);
+//                        completionBlock(details.copy);
+
                     }
-                    //NSLog(@"%@", details);
                     
+                    dict = nil;
+                    //NSLog(@"%@", details);
                 }] resume];
+    
+    woeid = nil;
+    set = nil;
+    encodedSELECT = nil;
+    encodedString = nil;
+    strRequest = nil;
+    session = nil;
+    request = nil;
 }
 
 @end

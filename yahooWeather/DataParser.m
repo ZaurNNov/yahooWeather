@@ -16,33 +16,32 @@
     id jsonResult = [NSJSONSerialization JSONObjectWithData:data
                                                     options:NSJSONReadingAllowFragments
                                                       error:nil];
-    //NSLog(@"%@", jsonResult);
     
-    NSMutableArray *cities = [[NSMutableArray alloc] init];
+    NSMutableArray <Cities *> *cities = [[NSMutableArray alloc] init];
     
-    NSDictionary *queryDict = jsonResult[@"query"]; // All data
+    NSDictionary *resultsDict = [jsonResult[@"query"] objectForKey:@"results"]; // All results
     
-    NSDictionary *resultsDict = queryDict[@"results"]; // All results
+    NSInteger fetchCount = [[jsonResult[@"query"] objectForKey:@"count"] integerValue];
     
-    NSInteger fetchCount = [queryDict[@"count"] integerValue];
-    
-    if (fetchCount > 1) {
+    if (fetchCount != 0) {
         NSDictionary *placesDict = resultsDict[@"place"]; // All plases
         
-           for (NSDictionary *dict in placesDict) {
-               Cities *city = [[Cities alloc] initWithName:[dict objectForKey:@"name"]
-                                                     woeid:[NSString stringWithFormat:@"%@", [dict objectForKey:@"woeid"]]];
-               [cities addObject:city];
-           }
-    } else if (fetchCount == 1) {
-        NSDictionary *placesDict = resultsDict[@"place"]; // Only 1 Citi
+        if (fetchCount == 1) {
+            
+            Cities *city = [[Cities alloc] initWithName:[placesDict objectForKey:@"name"]
+                                                  woeid:[placesDict objectForKey:@"woeid"]];
+            [cities addObject:city];
+        }
         
-        NSString *townName = [placesDict objectForKey:@"name"];
-        NSString *townWoeid = [placesDict objectForKey:@"woeid"];
-        
-        Cities *city = [[Cities alloc] initWithName:townName
-                                               woeid:[NSString stringWithFormat:@"%@", townWoeid]];
-        [cities addObject:city];
+        if (fetchCount > 1) {
+            
+            for (NSDictionary *dict in placesDict) {
+                Cities *city = [[Cities alloc] initWithName:[dict objectForKey:@"name"]
+                                                      woeid:[NSString stringWithFormat:@"%@", [dict objectForKey:@"woeid"]]];
+                [cities addObject:city];
+                city = nil;
+            }
+        }
     }
     
     return cities;
