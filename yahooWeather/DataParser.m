@@ -52,15 +52,12 @@
     id jsonResult = [NSJSONSerialization JSONObjectWithData:data
                                                     options:NSJSONReadingAllowFragments
                                                       error:nil];
-    //NSLog(@"%@", jsonResult);
+
     NSMutableDictionary *cityDetailsDict = [[NSMutableDictionary alloc] init];
-    NSNull *nulResult = [[NSNull alloc] init];
     
-    NSDictionary *queryDict = jsonResult[@"query"]; // All data
+    NSDictionary *resultsDict = [jsonResult[@"query"] objectForKey:@"results"]; // All results
     
-    NSDictionary *resultsDict = queryDict[@"results"]; // All results
-    
-    if (resultsDict != nulResult) {
+    if (resultsDict != Nil) {
         NSDictionary *channelDict = resultsDict[@"channel"]; // All details
         
         if (channelDict) {
@@ -83,12 +80,13 @@
                 [cityDetailsDict setObject:[condition objectForKey:@"text"] forKey:@"text"];
             }
             
-            if (queryDict) {
-                [cityDetailsDict setObject:[queryDict objectForKey:@"created"] forKey:@"date"];
+            if (jsonResult[@"query"]) {
+                [cityDetailsDict setObject:[jsonResult[@"query"] objectForKey:@"created"] forKey:@"date"];
             }
         }
     }
     
+    resultsDict = nil;
     
     NSLog(@"%@", cityDetailsDict); // pause
     return cityDetailsDict;
