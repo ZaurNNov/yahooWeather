@@ -19,12 +19,10 @@
     
     NSMutableArray <Cities *> *cities = [[NSMutableArray alloc] init];
     
-    NSDictionary *resultsDict = [jsonResult[@"query"] objectForKey:@"results"]; // All results
-    
     NSInteger fetchCount = [[jsonResult[@"query"] objectForKey:@"count"] integerValue];
     
     if (fetchCount != 0) {
-        NSDictionary *placesDict = resultsDict[@"place"]; // All plases
+        NSDictionary *placesDict = [[jsonResult[@"query"] objectForKey:@"results"] valueForKey:@"place"]; // All plases
         
         if (fetchCount == 1) {
             
@@ -62,7 +60,6 @@
             
             NSDictionary *itemsDict = [[[jsonResult[@"query"] objectForKey:@"results"] valueForKey:@"channel"] valueForKey:@"item"]; // All details
             NSDictionary *condition = [itemsDict objectForKey:@"condition"];
-//            NSLog(@"ConditionResult model: %@", condition);
             
             if (wind) {
                 [cityDetailsDict setObject:[wind objectForKey:@"chill"] forKey:@"chill"];

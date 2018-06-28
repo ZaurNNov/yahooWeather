@@ -37,7 +37,7 @@
 
 -(void)loadCityDetail:(Cities *)city {
     
-    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self fetchDetailForCiti:city];
     });
 }
@@ -106,9 +106,7 @@
 }
 
 - (void)fetchDetailForCiti:(Cities *)city {
-    
-    // get City details array:
-    // Array[2] = { WindResult, ConditionResult }
+
     [YQL fetchCityDetails:self.city completionBlock:^(NSDictionary *citiDetails) {
         
         dispatch_async(dispatch_get_main_queue(), ^{

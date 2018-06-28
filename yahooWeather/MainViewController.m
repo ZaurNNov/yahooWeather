@@ -239,13 +239,7 @@
     detailViewController.city = city;
     detailViewController.delegate = self;
     [self.navigationController pushViewController:detailViewController animated:YES];
-    detailViewController.view;
-    detailViewController.view;
-    NSLog(@"DBG After pushViewController");
     self.searchResultActive = NO;
-    int a = 4;
-    sleep(5);
-    NSLog(@"DBG After sleep");
 }
 
 -(void)selectCity:(Cities *)city
@@ -255,15 +249,6 @@
 
 // Delegate method for DetailVC
 - (void)saveCurrentCity:(Cities *)city {
-    
-//    for (Cities *oldCity in self.savedCities) {
-//        if ([city isEqual:oldCity]) {
-//            return;
-//        } else {
-//            [self.savedCities addObject:city];
-//        }
-//    }
-    
     NSLog(@"\nPausa");
     
     // нужна проверка на наличие города в имеющихся
@@ -275,7 +260,6 @@
     [self.searchBar resignFirstResponder];
 
     [self reloadCityList];
-
 }
 
 // self table select row method
@@ -287,10 +271,5 @@
         [self selectCity:self.savedCities[indexPath.row]];
     }
 }
-
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //
-}
-
 
 @end
