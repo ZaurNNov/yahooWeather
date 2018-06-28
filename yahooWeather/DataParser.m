@@ -55,18 +55,14 @@
 
     NSMutableDictionary *cityDetailsDict = [[NSMutableDictionary alloc] init];
     
-    NSDictionary *resultsDict = [jsonResult[@"query"] objectForKey:@"results"]; // All results
-    
-    if (resultsDict != Nil) {
-        NSDictionary *channelDict = resultsDict[@"channel"]; // All details
+    if ([jsonResult[@"query"] objectForKey:@"results"]) {
         
-        if (channelDict) {
-            NSDictionary *wind = [channelDict objectForKey:@"wind"];
-            NSLog(@"WindResult model: %@", wind);
+        if ([[jsonResult[@"query"] objectForKey:@"results"] valueForKey:@"channel"]) {
+            NSDictionary *wind = [[[jsonResult[@"query"] objectForKey:@"results"] valueForKey:@"channel"] valueForKey:@"wind"];
             
-            NSDictionary *itemsDict = channelDict[@"item"]; // All details
+            NSDictionary *itemsDict = [[[jsonResult[@"query"] objectForKey:@"results"] valueForKey:@"channel"] valueForKey:@"item"]; // All details
             NSDictionary *condition = [itemsDict objectForKey:@"condition"];
-            NSLog(@"ConditionResult model: %@", condition);
+//            NSLog(@"ConditionResult model: %@", condition);
             
             if (wind) {
                 [cityDetailsDict setObject:[wind objectForKey:@"chill"] forKey:@"chill"];
@@ -83,10 +79,12 @@
             if (jsonResult[@"query"]) {
                 [cityDetailsDict setObject:[jsonResult[@"query"] objectForKey:@"created"] forKey:@"date"];
             }
+            
+            wind = nil;
+            itemsDict = nil;
+            condition = nil;
         }
     }
-    
-    resultsDict = nil;
     
     NSLog(@"%@", cityDetailsDict); // pause
     return cityDetailsDict;
